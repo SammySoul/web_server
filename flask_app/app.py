@@ -15,7 +15,7 @@ data_list = []
 
 @app.route('/')
 def home():
-    return render_template('display_data.html')
+    return render_template('index.html')
 
 @app.route('/get_data', methods=['GET'])
 def get_data():
