@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #data-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        #data-list li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sensor Data</h1>
+    <ul id="data-list"></ul>
+
+    <script>
+        function fetchSensorData() {
+            fetch('/get_data')
+                .then(response => response.json())
+                .then(data => {
+                    const dataList = document.getElementById('data-list');
+                    dataList.innerHTML = '';  // Clear the list
+                    data.forEach(entry => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `Timestamp: ${entry.timestamp}, Data: ${entry.data}`;
+                        dataList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error fetching sensor data:', error));
+        }
+
+        // Fetch sensor data every 2 seconds
+        setInterval(fetchSensorData, 2000);
+
+        // Initial fetch to populate the list
+        fetchSensorData();
+    </script>
+</body>
+</html>
